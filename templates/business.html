@@ -1,0 +1,65 @@
+{% extends "home.html" %}
+
+{% block title %}Business{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; margin-top: 100px;">
+    <div class="col-md-6 col-lg-3">
+        <div class="pricing-info pricing">
+            <div class="title"><a >Business</a></div>
+            <div class="price-box">
+                <div class="icon pull-right border circle">
+                    <span class="livicon livicon-processed" data-n="wrench" data-s="32" data-c="#35beeb" data-hc="0" id="livicon-2" style="width: 32px; height: 32px;"><svg height="32" version="1.1" width="32" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; top: -0.15625px;" id="canvas-for-livicon-2"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><path fill="#35beeb" stroke="none" d="M11.954,7.18L10.026,4.882L7.071999999999999,5.401999999999999L6.046,8.221L7.974,10.519L10.928,9.999L11.954,7.18ZM7.851,8.665C7.318,8.03,7.401,7.084999999999999,8.036,6.552C8.671,6.02,9.616,6.101999999999999,10.149,6.736999999999999C10.681999999999999,7.371999999999999,10.597999999999999,8.318,9.963999999999999,8.85C9.329,9.382,8.384,9.299,7.851,8.665Z" opacity="0" stroke-width="0" transform="matrix(1,0,0,1,0,0)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#35beeb" stroke="none" d="M20.046,24.82L21.974999999999998,27.118000000000002L24.929,26.597L25.953999999999997,23.779L24.025999999999996,21.481L21.071999999999996,22.002000000000002L20.046,24.82ZM24.149,23.336C24.681,23.971,24.599,24.915999999999997,23.964000000000002,25.448999999999998C23.329,25.979999999999997,22.384,25.898,21.851000000000003,25.262999999999998S21.402,23.683,22.036,23.15C22.671,22.618,23.616,22.701,24.149,23.336Z" opacity="0" stroke-width="0" transform="matrix(1,0,0,1,0,0)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#35beeb" stroke="none" d="M15.03,13.384L3.969999999999999,23.028C2.791999999999999,24.055,2.669999999999999,25.843999999999998,3.6929999999999987,27.025C4.716999999999999,28.206,6.501999999999999,28.331999999999997,7.6789999999999985,27.304L18.75,17.649C21.246,18.847,24.320999999999998,18.531000000000002,26.543,16.593C28.65,14.757,29.419999999999998,11.957,28.781,9.416L24.483999999999998,13.11L20.979,11.9L20.271,8.249L24.579,4.546000000000001C22.151,3.542000000000001,19.265,3.9120000000000013,17.148,5.758000000000001C14.916,7.704,14.178,10.73,15.03,13.384Z" transform="matrix(1,0,0,1,0,0)" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path></svg></span>
+                </div>
+                <div class="starting">Starting at</div>
+                <div class="price">$10<span>/month</span></div>
+            </div>
+            <ul class="options">
+                <li class="active"><span><i class="fa fa-check"></i></span>Can download  30 files per day
+                </li>
+                <li class="active"><span><i class="fa fa-check"></i></span>Bios and Schematics
+                </li>
+                <li class="active"><span><i class="fa fa-check"></i></span>Boardview files
+                </li>
+                <li class="active"><span><i class="fa fa-check"></i></span>Gpu conversions
+                </li>
+                <li class="active"><span><i class="fa fa-check"></i></span>Require supported
+                </li>
+                <li class="active"><span><i class="fa fa-check"></i></span>Start a Conversation with us
+                </li>
+                
+            </ul>
+            <div class="bottom-box">
+<button class="btn btn-lg btn-info clearfix" id="rzp-button1">Buy Now</button>
+
+            </div>
+        </div>
+    </div>
+      <!-- razorpay docs javascript -->
+<script>
+var options = {
+"key": "rzp_test_KCDkoo7vMVdCce", // Enter the Key ID generated from the Dashboard
+"amount": "100", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+"currency": "INR",
+"name": "Laptop Care and Solutions", //your business name
+"description": "Standard",
+//"order_id": "{{payment.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+"callback_url": "http://localhost:8000/register",
+"notes": {
+"address": "Razorpay Corporate Office"
+},
+"theme": {
+"color": "#3399cc"
+}
+};
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+rzp1.open();
+e.preventDefault();
+}
+</script>
+        </div>
+    </div>
+</div></div>
+
+{% endblock %}

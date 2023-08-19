@@ -1,0 +1,21 @@
+{% extends "home.html" %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<main style="display: flex; height: 85vh; width: 100%; justify-content: center; align-items: center;">
+    <div style="height: fit-content; width: 400px; background-color: rgba(0, 0, 0, 0.805) ; border-radius: 5px; ">
+       <form method="POST" style="display: flex; flex-direction: column; text-align: center; color: white;">
+           {% csrf_token %}
+           <h1>Contact Us</h1>
+           <input type="text" name="name" placeholder="Enter your name" style="margin-right: 10px; margin-left: 10px; height: 25px;"> <br>
+           <input type="email" name="mail" placeholder="Enter your email" style="margin-right: 10px; margin-left: 10px; height: 25px;"> <br>
+           <input type="address" name="address" placeholder="Enter your address" style="margin-right: 10px; margin-left: 10px; height: 25px;"> <br>
+           <input type="text" name="message" placeholder="Enter your message" style="margin-right: 10px; margin-left: 10px; height: 25px;"> <br>
+           <button type="submit" style="height: 40px; background-color: skyblue; font-size: 25px; border-radius: 5px ;">Submit</button>
+       </form>
+    </div>
+   </main>
+
+{% endblock %}
+

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Forums{% endblock %}</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/23fdf0a18e.js" crossorigin="anonymous"></script>
+  </head>
+<body>
+    <nav class="navbar navbar-expand-lg " style="background-color: black;">
+        <div class="container">
+            {% if user.is_authenticated %}
+            <span style="color: white; font-size: 20px; margin-right: 40px;"> Welcome, {{user.username}} !</span>
+            {% endif %}
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon navbar-dark"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if user.is_authenticated and user.is_staff %}
+                <a class="navbar-brand" href="upload_files" style="font-weight: 500; color: white; margin-right: 40px;">Upload</a>
+                {% endif %}
+                <a class="navbar-brand" href="/" style="font-weight: 500; color: white; margin-right: 40px;">Forums</a> 
+                <a class="navbar-brand" href="contact" style="font-weight: 500; color: white; margin-right: 40px;">Contact Us</a>   
+              {% if user.is_authenticated %}
+              <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
+                  Profile
+                </a>
+                
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="myplan">My Plan({{plans}})</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="logoutUser">Logout</a></li>
+                </ul>
+              </div>
+              {% else %}
+              <a class="navbar-brand" href="plans" style="font-weight: 500; color: white; margin-right: 40px;">Plans & Pricing</a>
+              <a class="navbar-brand" href="loginUser" style="font-weight: 500; color: white; margin-right: 40px;">Login</a>
+              <a class="navbar-brand" href="plans" style="font-weight: 500; color: white; margin-right: 40px;">Register</a>
+              {% endif %}
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <div class="nav-bottom " style="height: 40px; background-color: skyblue;">
+            <div class="container">
+                <a href="#" style="text-decoration: none; color: black; font-size: 20px; margin-right: 20px;">New Posts</a>
+                <a href="about" style="text-decoration: none; color: black; font-size: 20px;">About</a>
+            </div>    
+      </div>
+      {% block content %}
+        <div class="container-fluid" style="background: url(../static/red.png); height: 500px; width: auto; display: flex; align-items: center; justify-content: center;">
+           <div style="color: white; text-align: center;">
+            {% if user.is_authenticated %}
+            <h1>Welcome to Laptop Care and Solutions.</h1> <br>
+            <h3>Technical support for Laptops, PCs and Macbooks.</h3> <br><br>
+            {% else %}
+            <h1>Welcome to Laptop Care and Solutions.</h1> <br>
+            <h3>Technical support for Laptops, PCs and Macbooks.</h3> <br><br>
+            <a href="plans"> <button style="width: 20%; height: 3em;font-weight: bold; background-color: white; color: black; border-radius: 2em;">Join Us</button></a>
+            {%endif%}
+           </div>
+        </div> <br><br><br>
+        <div class="container" style="display: flex; justify-content: center;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">File</th>
+                <th scope="col">File Type</th>
+                <th scope="col">Posted on</th>
+                <th scope="col">Posted by</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for upload in latest_uploads %}
+              <tr>
+                {% if user.is_authenticated %}
+                <td>{{upload.title}}</td>
+                <td>{{upload.filetype}}</td>
+                <td><button class="download-button"><a href="{{upload.file.url}}" download="{{upload.file.url}}">Download</a></button></td>  
+                <td>{{upload.uploaded_datetime}}</td>
+                <td>{{upload.uploaded_by.username}}</td>
+                {% else %}
+                <td>{{upload.title}}</td>
+                <td>{{upload.filetype}}</td>
+                <td><a href="loginUser">Download</a></td>  
+                <td>{{upload.uploaded_datetime}}</td>
+                <td>{{upload.uploaded_by.username}}</td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      
+      {% endblock %}
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+      <!-- HTML -->
+
+<script>
+// JavaScript
+let downloadCount = 0;
+const maxDownloadsPerDay =2;
+let lastDownloadDate = new Date().getDate();
+const downloadButtons = document.querySelectorAll('.download-button');
+
+downloadButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const currentDate = new Date().getDate();
+
+    if (currentDate === lastDownloadDate) {
+      if (downloadCount < maxDownloadsPerDay) {
+        downloadCount++;
+        if (downloadCount >= maxDownloadsPerDay) {
+          disableDownloadButtons();
+        }
+      } else {
+        alert('You have reached the maximum download limit for today.');
+      }
+    } else {
+      downloadCount = 1;
+      lastDownloadDate = currentDate;
+    }
+  });
+});
+
+function disableDownloadButtons() {
+  downloadButtons.forEach(button => {
+    button.disabled = true;
+    button.innerHTML='Limit Reached'
+  });
+}
+
+
+</script>
+
+    </body>
+</html>

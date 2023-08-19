@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+
+<body style="display: flex; justify-content: center;align-items: center; height: 100vh; font-family: Arial, Helvetica, sans-serif;">
+     <div class="box" style=" display: flex;flex-direction: column; height: fit-content; border: 2px solid rgb(71, 65, 65);border-radius: 1.3em; text-align: center; width: 400px; ">
+        <ul style="color: black;">
+            <li>Password should have more than 9 characters.</li>
+            <li>Include three sybmols and three numbers.</li>
+        </ul>
+          <h1>Register</h1>
+          <form method="POST">
+            {% csrf_token %}
+            <input type="text" placeholder="Enter Mobile number including +91" name="username" style="width: 70%; height: 2.5em;">
+            <br><br>
+            <input type="password" placeholder="Enter password" name="password1" style="width: 70%; height: 2.5em;">
+            <br><br>
+            <input type="password" placeholder="confirm password" name="password2" style="width: 70%; height: 2.5em;">
+            <br><br>
+            <input type="email" placeholder="Enter Email" name="email" style="width: 70%; height: 2.5em;">
+            <br><br>
+            <input type="First Name" placeholder="First Name" name="first_name" style="width: 70%; height: 2.5em;">
+            <br><br>
+            <input type="Last Name" placeholder="Last Name" name="last_name" style="width: 70%; height: 2.5em;">
+            <br><br>
+            <input type="submit" value ="Register" id="login-btn" style="width: 70%; height: 3em; background-color: black; color: white;"/> <br><br>
+           
+        </form>
+     </div>    
+</body>
+</html>
